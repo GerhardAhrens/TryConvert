@@ -9,4 +9,8 @@
     <Folder Include="Core\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TryConvertLibrary\TryConvertLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

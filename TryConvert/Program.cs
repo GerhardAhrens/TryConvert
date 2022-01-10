@@ -2,11 +2,13 @@
 {
     using System;
 
+    using TryConvertLibrary.Core;
+
     internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string result = TryConvert.ToString(0);
             Console.ReadKey();
         }
     }
