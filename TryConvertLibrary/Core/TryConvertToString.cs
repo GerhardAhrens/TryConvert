@@ -31,7 +31,24 @@ namespace TryConvertLibrary.Core
             return value.ToString();
         }
 
-        public static string ToString(int value, string format)
+        public static string ToString(int value, IFormatProvider provider)
+        {
+            if (provider == null)
+            {
+                return value.ToString();
+            }
+            else
+            {
+                return value.ToString(provider);
+            }
+        }
+
+        public static string ToString(double value)
+        {
+            return value.ToString();
+        }
+
+        public static string ToString(double value, string format)
         {
             if (string.IsNullOrEmpty(format) == false)
             {
@@ -43,7 +60,19 @@ namespace TryConvertLibrary.Core
             }
         }
 
-        public static string ToString(int value, string format = "", IFormatProvider provider = null)
+        public static string ToString(double value, IFormatProvider provider)
+        {
+            if (provider == null)
+            {
+                return value.ToString();
+            }
+            else
+            {
+                return value.ToString(provider);
+            }
+        }
+
+        public static string ToString(double value, string format, IFormatProvider provider)
         {
             if (string.IsNullOrEmpty(format) == false)
             {
@@ -67,11 +96,6 @@ namespace TryConvertLibrary.Core
                     return value.ToString(provider);
                 }
             }
-        }
-
-        public static string ToString(long value, IFormatProvider provider = null)
-        {
-            return default;
         }
     }
 }
