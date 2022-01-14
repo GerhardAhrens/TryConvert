@@ -22,6 +22,7 @@ namespace TryConvertLibrary.Core
     using System.Linq;
     using System.Linq.Expressions;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     public partial class TryConvert
@@ -79,6 +80,166 @@ namespace TryConvertLibrary.Core
             }
 
             return string.Join(" ", split);
+        }
+
+        /// <summary>
+        /// Konvertiert den Wert dieser Instanz in seine äquivalente String-Darstellung
+        /// <br>Sprachabhängig in Deutsch oder englisch (entweder "Ja/Yes" oder "Nein/No").</br>
+        /// </summary>
+        /// <param name="">bool Value</param>
+        /// <returns>string</returns>
+        public static string ToYesNoString(bool @this)
+        {
+            if (CultureInfo.CurrentCulture.Name == "de-DE")
+            {
+                return @this ? "Ja" : "Nein";
+            }
+            else
+            {
+                return @this ? "Yes" : "No";
+            }
+        }
+
+        /// <summary>
+        /// Konvertiert den Wert dieser Instanz in seine äquivalente String-Darstellung
+        /// <br>Sprachabhängig in Deutsch oder englisch (entweder "Ja/Yes" oder "Nein/No")</br>
+        /// <br>unter Berücksichtigung der übergeben Cultur.</br>
+        /// </summary>
+        /// <param name="this">bool Value</param>
+        /// <param name="cultureInfo">Current CultureInfo</param>
+        /// <returns></returns>
+        public static string ToYesNoString(bool @this, CultureInfo cultureInfo)
+        {
+            if (cultureInfo.Name == "de-DE")
+            {
+                return @this ? "Ja" : "Nein";
+            }
+            else
+            {
+                return @this ? "Yes" : "No";
+            }
+        }
+
+        public static string ToCamelCase(string @this)
+        {
+            if (string.IsNullOrEmpty(@this) == true)
+            {
+                return string.Empty;
+            }
+
+            if (@this.Length < 2)
+            {
+                return @this;
+            }
+
+            string[] words = @this.Split(new char[] { }, StringSplitOptions.RemoveEmptyEntries);
+
+            string result = words[0].ToLower();
+            for (int i = 1; i < words.Length; i++)
+            {
+                result += words[i].Substring(0, 1).ToUpper() + words[i].Substring(1);
+            }
+
+            return result;
+        }
+
+        public static string ToPascalCase(string @this)
+        {
+            if (string.IsNullOrEmpty(@this) == true)
+            {
+                return string.Empty;
+            }
+
+            if (@this.Length <= 2)
+            {
+                return @this.ToUpper();
+            }
+
+            string[] words = @this.ToLower().Split(new char[] { }, StringSplitOptions.RemoveEmptyEntries);
+
+            string result = "";
+            foreach (string word in words)
+            {
+                result += word.Substring(0, 1).ToUpper() + word.Substring(1);
+            }
+
+            return result;
+        }
+
+        public static string ToProperCase(string @this)
+        {
+            if (string.IsNullOrEmpty(@this) == true)
+            {
+                return string.Empty;
+            }
+
+            if (@this.Length <= 2)
+            {
+                return @this.ToUpper();
+            }
+
+            return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(@this);
+        }
+
+        public static string ToInitials(string @this, bool withNumber = true)
+        {
+            if (string.IsNullOrEmpty(@this) == true)
+            {
+                return "??";
+            }
+
+            // first remove all: punctuation, separator chars, control chars, and numbers (unicode style regexes)
+            string initials = Regex.Replace(@this, @"[\p{P}\p{S}\p{C}]+", "");
+
+            if (withNumber == true)
+            {
+                initials = Regex.Replace(initials, @"[\p{N}]+", "");
+            }
+
+            // Replacing all possible whitespace/separator characters (unicode style), with a single, regular ascii space.
+            initials = Regex.Replace(initials, @"\p{Z}+", " ");
+
+            // Remove all Sr, Jr, I, II, III, IV, V, VI, VII, VIII, IX at the end of names
+            initials = Regex.Replace(initials.Trim(), @"\s+(?:[JS]R|I{1,3}|I[VX]|VI{0,3})$", "", RegexOptions.IgnoreCase);
+
+            // Extract up to 2 initials from the remaining cleaned name.
+            initials = Regex.Replace(initials, @"^(\p{L})[^\s]*(?:\s+(?:\p{L}+\s+(?=\p{L}))?(?:(\p{L})\p{L}*)?)?$", "$1$2").Trim();
+
+            if (initials.Length > 2)
+            {
+                // Worst case scenario, everything failed, just grab the first two letters of what we have left.
+                initials = initials.Substring(0, 2);
+            }
+
+            return initials.ToUpperInvariant();
+        }
+
+        public static string ToInitials(string @this, int MaxLength = 3)
+        {
+            char space = ' ';
+
+            if (string.IsNullOrEmpty(@this))
+            {
+                return @this;
+            }
+
+
+            StringBuilder sb = new StringBuilder();
+            string[] words = @this.Split(space);
+
+            if (words.Length <= 3)
+            {
+                for (int i = 0; i < words.Length; i++)
+                {
+                    sb.Append(words[i].Substring(0, 1));
+                }
+            }
+            else
+            {
+
+            }
+
+            return sb.ToString().ToUpper();
         }
     }
 }

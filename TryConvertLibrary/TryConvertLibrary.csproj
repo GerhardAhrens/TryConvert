@@ -8,4 +8,10 @@
     <Folder Include="Extension\System\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Core\TryConvertToBool.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
