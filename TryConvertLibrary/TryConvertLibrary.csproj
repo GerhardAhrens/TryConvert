@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Core\TryConvertToDecimal.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Core\TryConvertToBool.cs">
       <SubType>Code</SubType>
     </Compile>
