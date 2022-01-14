@@ -18,84 +18,67 @@ namespace TryConvertLibrary.Core
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Text;
     using System.Threading.Tasks;
 
-
-
     public partial class TryConvert
     {
-        public static string ToString(int value)
+        public static string ToString(List<string> value, char separator)
         {
-            return value.ToString();
+            return string.Join(separator,value);
         }
 
-        public static string ToString(int value, IFormatProvider provider)
+        public static string ToString(IEnumerable<string> value, char separator)
         {
-            if (provider == null)
-            {
-                return value.ToString();
-            }
-            else
-            {
-                return value.ToString(provider);
-            }
+            return string.Join(separator, value);
         }
 
-        public static string ToString(double value)
+        public static string ToString<TKey, TValue>(Dictionary<TKey,TValue> value, char separator = ';')
         {
-            return value.ToString();
+            return value.Select(x => x.Key + "=" + x.Value).Aggregate((s1, s2) => $"{s1}{separator}{s2}");
         }
 
-        public static string ToString(double value, string format)
+        public static string ToCapitalize(string value)
         {
-            if (string.IsNullOrEmpty(format) == false)
-            {
-                return value.ToString(format);
-            }
-            else
-            {
-                return value.ToString();
-            }
+            return ToCapitalize(value, CultureInfo.CurrentCulture);
         }
 
-        public static string ToString(double value, IFormatProvider provider)
+        public static string ToCapitalize(string value, CultureInfo culture)
         {
-            if (provider == null)
+            culture.IsArgumentNull(nameof(culture));
+
+            if (string.IsNullOrEmpty(value) == true)
             {
-                return value.ToString();
+                return string.Empty;
             }
-            else
+
+            if (value.Length == 0)
             {
-                return value.ToString(provider);
+                return string.Empty;
             }
+
+            TextInfo textInfo = culture.TextInfo;
+
+            return textInfo.ToTitleCase(value);
         }
 
-        public static string ToString(double value, string format, IFormatProvider provider)
+        public static string ToCapitalizeWords(string value, params string[] dontCapitalize)
         {
-            if (string.IsNullOrEmpty(format) == false)
+            char[] delimiter = new char[] { ' ', '.', '-' };
+            var split = value.Split(delimiter);
+            for (int i = 0; i < split.Length; i++)
             {
-                if (provider == null)
-                {
-                    return value.ToString(format);
-                }
-                else
-                {
-                    return value.ToString(format, provider);
-                }
+                split[i] = i == 0
+                  ? ToCapitalize(split[i])
+                  : dontCapitalize.Contains(split[i])
+                     ? split[i]
+                     : ToCapitalize(split[i]);
             }
-            else
-            {
-                if (provider == null)
-                {
-                    return value.ToString();
-                }
-                else
-                {
-                    return value.ToString(provider);
-                }
-            }
+
+            return string.Join(" ", split);
         }
     }
 }

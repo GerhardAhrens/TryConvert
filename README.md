@@ -2,3 +2,5 @@
 
 ## The program is written for .NET5
 
+# TryConvert for any Type
+
