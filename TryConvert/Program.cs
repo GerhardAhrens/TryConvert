@@ -21,6 +21,9 @@
 
             string t2 = TryConvert.ToCapitalizeWords("test.hallo.Test", "hallo");
 
+            Tuple<int, string, Guid> tuple = new Tuple<int, string, Guid>(1, "Gerhard", Guid.NewGuid());
+            string t3 = TryConvert.ToString(tuple);
+
             Console.ReadKey();
         }
     }

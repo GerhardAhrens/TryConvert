@@ -21,6 +21,7 @@ namespace TryConvertLibrary.Core
     using System.Globalization;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
@@ -40,6 +41,17 @@ namespace TryConvertLibrary.Core
         public static string ToString<TKey, TValue>(Dictionary<TKey,TValue> value, char separator = ';')
         {
             return value.Select(x => x.Key + "=" + x.Value).Aggregate((s1, s2) => $"{s1}{separator}{s2}");
+        }
+
+        public static string ToString(ITuple value, char separator = ';')
+        {
+            var result = new List<object>(value.Length);
+            for (int i = 0; i < value.Length; i++)
+            {
+                result.Add(value[i].ToString());
+            }
+
+            return string.Join(separator, result);
         }
 
         public static string ToCapitalize(string value)
