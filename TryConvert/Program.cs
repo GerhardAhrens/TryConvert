@@ -15,7 +15,7 @@
                 { 2, "value2" }
             };
 
-            string text = TryConvert.ToString<int,string>(dict);
+            string text = TryConvert.ToString(dict);
 
             string t1 = TryConvert.ToCapitalize("test");
 
