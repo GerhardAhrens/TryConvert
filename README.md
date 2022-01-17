@@ -1,12 +1,12 @@
 # TryConvert <img src="./TryConvert.png" style="width:50px;"/>
 
-## The program is written for .NET5
+### The program is written for .NET5
 
-# TryConvert for any Type
+## TryConvert for any Type
 
 The TryConvert class provides a collection of methods for converting types.
 
-## Example
+### Example
 ```
 Dictionary<int,string> dict = new Dictionary<int, string>() 
 {
@@ -17,7 +17,7 @@ Dictionary<int,string> dict = new Dictionary<int, string>()
 string text = TryConvert.ToString(dict);
 
 ```
-# Result
+## Result
 ```
 1=value1;2=value2
 ```
