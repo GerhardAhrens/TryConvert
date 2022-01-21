@@ -47,6 +47,16 @@
 
             Debug.WriteLine($"{employeeC.Firstname}; Typ:{employeeC.GetType().Name}");
 
+            /*
+            List<ComparerClass1> personB = new List<ComparerClass1>();
+            personB.Add(new ComparerClass1(1,"George"));
+            personB.Add(new ComparerClass1(2,"Fred"));
+            personB.Add(new ComparerClass1(3,"Tom"));
+            personB.Add(new ComparerClass1(4,"Bob"));
+            personB.Sort(ComparerClass1.ByName);
+            personB.Sort(ComparerClass1.ById);
+            */
+
             Console.ReadKey();
         }
     }
