@@ -9,13 +9,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Core\TryConvertToGeneric.cs">
+    <Compile Update="Core\Converter\TryConvertToGeneric.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Core\TryConvertToDecimal.cs">
+    <Compile Update="Core\Converter\TryConvertToDecimal.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Core\TryConvertToBool.cs">
+    <Compile Update="Core\Converter\TryConvertToBool.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

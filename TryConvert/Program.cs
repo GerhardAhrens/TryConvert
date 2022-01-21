@@ -10,14 +10,6 @@
     {
         private static void Main(string[] args)
         {
-            Dictionary<int,string> dict = new Dictionary<int, string>() 
-            {
-                { 1, "value1" },
-                { 2, "value2" }
-            };
-
-            string text = TryConvert.ToString(dict);
-
             string t1 = TryConvert.ToCapitalize("test");
 
             string t2 = TryConvert.ToCapitalizeWords("test.hallo.Test", "hallo");
